@@ -1,0 +1,8 @@
+---
+- name: Boot
+  hosts: localhost
+  remote_user: root
+  
+  roles:
+    #- common
+    - tekton

@@ -1,0 +1,98 @@
+---
+# tasks file for tekton
+
+- name: Install python3-devel
+  dnf:
+    name: python3-devel
+    state: latest
+
+- name: Install pyhelm
+  pip:
+    name:
+      - pyhelm
+      - pyyaml
+      - openshift
+
+# I hope this will be replaced with helm module when the huge bugs resolved.
+- name: Install openshift-pipelines helm chart
+  shell: helm upgrade --install openshift-pipelines /root/knative-tekton/openshift-pipelines
+
+- name: Install openshift-serverless helm chart
+  shell: helm upgrade --install openshift-serverless /root/knative-tekton/openshift-serverless
+
+- name: Install bootstrap-projects bootstrap-projects
+  shell: helm upgrade --install bootstrap-projects /root/knative-tekton/bootstrap-projects
+
+- name: Create knative-serving namespace
+  community.kubernetes.k8s:
+    name: knative-serving
+    api_version: v1
+    kind: Namespace
+    state: present
+    verify_ssl: false
+
+- name: Create knative-serving instance
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: operator.knative.dev/v1alpha1
+      kind: KnativeServing
+      metadata:
+        name: knative-serving
+        namespace: knative-serving
+
+- name: Create buildah
+  community.kubernetes.k8s:
+    state: present
+    template: buildah.yaml
+    namespace: cicd
+
+- name: Create custom tasks
+  community.kubernetes.k8s:
+    state: present
+    template: push-knative-manifest.yaml
+    namespace: cicd
+
+- name: Create custom tasks 2
+  community.kubernetes.k8s:
+    state: present
+    template: workspace-cleaner.yaml
+    namespace: cicd
+
+- name: Create knative-pipeline
+  community.kubernetes.k8s:
+    state: present
+    template: knative-pipeline.yaml
+    namespace: cicd
+
+- name: Create ConfigMap for knative-kustomize-base
+  shell: oc create cm knavite-kustomize-base --from-file=/root/knative-tekton/tekton/workspaces/knative/base/kservice.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/base/kustomization.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/base/global-ops-configmap.yaml -n cicd
+
+- name: Create ConfigMap for knative-kustomize-environment
+  shell: oc create cm knative-kustomize-environment   --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/traffic-routing.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/kustomization.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/revision-patch.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/routing-patch.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/env-ops-configmap.yaml -n cicd
+
+- name: Create ConfigMap for maven
+  shell: oc create cm maven --from-file=/root/knative-tekton/tekton/workspaces/maven/settings.xml -n cicd
+
+# - name: Create PV
+#   community.kubernetes.k8s:
+#     state: present
+#     template: pv.yaml
+#     namespace: cicd
+
+# - name: Create PVC
+#   community.kubernetes.k8s:
+#     state: present
+#     template: pvc.yaml
+#     namespace: cicd
+
+- name: Create secret for GitHub
+  community.kubernetes.k8s:
+    state: present
+    template: github.yaml
+    namespace: cicd
+
+# - name: Add credentials to the pipeline
+#   shell: oc patch serviceaccount pipeline -p '{"secrets": [{"name": "github-credentials"}]}' \
+#    -n cicd
+
