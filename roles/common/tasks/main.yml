@@ -1,33 +1,7 @@
 ---
 # tasks file for common
-- name: Install Git
-  dnf:
-    name: git
-    state: latest
-
-- name: Clone project repository
-  git:
-    repo: 'https://github.com/fatihkc/rh-developers-cicd.git'
-    dest: /root/knative-tekton
-
 - name: Install Helm
   shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-- name: Download oc
-  get_url:
-    url: "{{ ocp_client }}"
-    dest: /usr/local/src/openshift-client-linux.tar.gz
-
-- name: Unarchive oc
-  unarchive:
-    src: /usr/local/src/openshift-client-linux.tar.gz
-    dest: /usr/local/bin
-    remote_src: yes
-
 - name: Install Kustomize
   shell: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash && mv /root/knative-tekton/kustomize /usr/bin
-
-- name: Add kubernetes repository
-  template:
-    src: kubernetes.repo
-    dest: /etc/yum.repos.d/kubernetes.repo

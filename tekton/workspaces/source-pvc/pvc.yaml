@@ -8,4 +8,5 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: test
+#  storageClassName: ${STORAGE_CLASS}
+  volumeMode: Filesystem
