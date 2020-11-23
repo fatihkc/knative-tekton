@@ -1,12 +1,16 @@
 # GitOps with Tekton and ArgoCD
 
+This project aims to create infrastructure for serverless applications with GitOps pratices. Playbooks install Operators and then create their basic components. After starting a pipeline project build and push images to registry. Then ArgoCD checks for synchronization of development, staging and production environments with Kustomize. If anything changes, Tekton notice that change and create new images. ArgoCD keeps syncing environments. 
+
 ## Technologies
 
 * OpenShift
 * Ansible
 * Knative
+* Helm
 * Tekton
 * ArgoCD
+* Kustomize
 * Quarkus
 
 ## Requirements
