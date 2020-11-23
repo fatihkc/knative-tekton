@@ -35,6 +35,6 @@ spec:
   - name: dockerfile
     value: ./src/main/docker/Dockerfile.jvm
   - name: image-registry
-    value: registry.ocp.solusbilisim.com:5000
+    value: image-registry.openshift-image-registry.svc.cluster.local:5000
   - name: image-repository
     value: ${NS}

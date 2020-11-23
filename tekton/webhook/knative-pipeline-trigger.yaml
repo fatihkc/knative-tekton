@@ -23,7 +23,7 @@ spec:
     description: The git repository url
   - name: git-revision
     description: The git revision
-    default: master
+    default: main
   - name: git-repo-name
     description: The name of the application to be packaged
   - name: truncated-head-commit-id
@@ -32,13 +32,13 @@ spec:
     description: The git repository url that keeps deployment desciptors
   - name: deployment-git-revision
     description: The git revision for deployment repo
-    default: master
+    default: main
   - name: dockerfile
     description: docker file for the image build
     default: ./src/main/docker/Dockerfile.jvm
   - name: image-registry
     description: image registry, using internal as default
-    default: registry.ocp.solusbilisim.com:5000
+    default: image-registry.openshift-image-registry.svc.cluster.local:5000
   - name: image-repository
     description: image repository
   resourcetemplates:

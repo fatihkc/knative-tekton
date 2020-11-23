@@ -246,4 +246,4 @@ spec:
         git add --a -v 
         git commit -m "New knative manifests for commit $(params.source-commit-id) of application $(params.application)"
         # FIXME master harcoded
-        git push origin HEAD:master
+        git push origin HEAD:main

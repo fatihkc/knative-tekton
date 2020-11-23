@@ -17,11 +17,11 @@ spec:
     - name: deployment-repo-url
       value: ${DEPLOYMENT_REPO}
     - name: deployment-revision
-      value: master
+      value: main
     - name: dockerfile
       value: ./src/main/docker/Dockerfile.jvm
     - name: image-registry
-      value: registry.ocp.solusbilisim.com:5000
+      value: image-registry.openshift-image-registry.svc.cluster.local:5000
     - name: image-repository
       value: ${IMAGES_NS}
   workspaces:

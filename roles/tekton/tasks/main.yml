@@ -66,7 +66,7 @@
     namespace: cicd
 
 - name: Create ConfigMap for knative-kustomize-base
-  shell: oc create cm knavite-kustomize-base --from-file=/root/knative-tekton/tekton/workspaces/knative/base/kservice.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/base/kustomization.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/base/global-ops-configmap.yaml -n cicd
+  shell: oc create cm knative-kustomize-base --from-file=/root/knative-tekton/tekton/workspaces/knative/base/kservice.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/base/kustomization.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/base/global-ops-configmap.yaml -n cicd
 
 - name: Create ConfigMap for knative-kustomize-environment
   shell: oc create cm knative-kustomize-environment   --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/traffic-routing.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/kustomization.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/revision-patch.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/routing-patch.yaml --from-file=/root/knative-tekton/tekton/workspaces/knative/environment/env-ops-configmap.yaml -n cicd
