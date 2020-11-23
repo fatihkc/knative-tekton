@@ -15,13 +15,13 @@
 
 # I hope this will be replaced with helm module when the huge bugs resolved.
 - name: Install openshift-pipelines helm chart
-  shell: helm upgrade --install openshift-pipelines /root/knative-tekton/openshift-pipelines
+  shell: helm upgrade --install openshift-pipelines /root/knative-tekton/helm-charts/openshift-pipelines
 
 - name: Install openshift-serverless helm chart
-  shell: helm upgrade --install openshift-serverless /root/knative-tekton/openshift-serverless
+  shell: helm upgrade --install openshift-serverless /root/knative-tekton/helm-charts/openshift-serverless
 
 - name: Install bootstrap-projects bootstrap-projects
-  shell: helm upgrade --install bootstrap-projects /root/knative-tekton/bootstrap-projects
+  shell: helm upgrade --install bootstrap-projects /root/knative-tekton/helm-charts/bootstrap-projects
 
 - name: Create knative-serving namespace
   community.kubernetes.k8s:
