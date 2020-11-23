@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: quarkus-hello-world-development
+  namespace: cicd
+spec:
+  destination:
+    namespace: development
+    server: 'https://kubernetes.default.svc'
+  project: cloud
+  source:
+    path: development
+    repoURL: https://github.com/fatihkc/pipeline-test.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: quarkus-hello-world-staging
+  namespace: cicd
+spec:
+  destination:
+    namespace: staging
+    server: 'https://kubernetes.default.svc'
+  project: cloud
+  source:
+    path: staging
+    repoURL: https://github.com/fatihkc/pipeline-test.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: quarkus-hello-world-production
+  namespace: cicd
+spec:
+  destination:
+    namespace: production
+    server: 'https://kubernetes.default.svc'
+  project: cloud
+  source:
+    path: production
+    repoURL: https://github.com/fatihkc/pipeline-test.git
+    targetRevision: main

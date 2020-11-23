@@ -1,0 +1,27 @@
+---
+- name: Install argocd helm chart
+  shell: helm upgrade --install argocd argocd --set namespace=cicd
+
+- name: Create ArgoCD
+  community.kubernetes.k8s:
+    state: present
+    template: argocd.yaml
+    namespace: cicd
+
+- name: Edit role for development, staging and production
+  community.kubernetes.k8s:
+    state: present
+    template: argo-role-bindings.yaml
+    namespace: cicd
+
+- name: Create cloud team project
+  community.kubernetes.k8s:
+    state: present
+    template: argo-app-project.yaml
+    namespace: cicd
+
+- name: Create applications
+  community.kubernetes.k8s:
+    state: present
+    template: argo-apps.yaml
+    namespace: cicd
