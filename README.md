@@ -18,6 +18,10 @@ This project aims to create infrastructure for serverless applications with GitO
 * OpenShift
 * Ansible
 
+## Pipeline Tasks
+
+![Pipeline](images/pipeline.png "pipeline")
+
 ## Initial configuration
 
 Install Kubernetes modules.
@@ -66,3 +70,5 @@ Get your route for accessing ArgoCD. Use your OpenShift credentials for access. 
     oc get routes argocd-server -n cicd
     
 Now you need to see your deployments. Start developing your application!
+
+This project is based on David Sancho Ruiz's project. You can find original repository [here](https://github.com/dsanchor/rh-developers-cicd). This project makes it automated and improved. My goal is making Quarkus serverless deployments automated and trying to show how we can improve our pipelines.
